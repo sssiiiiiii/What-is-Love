@@ -26,6 +26,11 @@
       font-size: 1.2rem;
     }
 
+    .nav a, .nav div {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .title {
       margin: 1rem auto 0.5rem;
       font-size: 1.4rem;
@@ -93,7 +98,7 @@
 <body>
   <div class="nav">
     <div>01</div>
-    <div>02</div>
+    <a href="02.html" style="text-decoration: none; color: inherit;">02</a>
     <div>03</div>
   </div>
   <div class="title">What is Love?</div>
@@ -118,18 +123,33 @@
       img.alt = `Lock ${i}`;
 
       const audio = new Audio(`sounds/${i}.mp3`);
+      audio.loop = false;
+
+      let isMouseDown = false;
+
       img.addEventListener('mouseenter', () => {
         audio.currentTime = 0;
         audio.play();
       });
 
+      img.addEventListener('mouseleave', () => {
+        if (!isMouseDown) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
+
       img.addEventListener('mousedown', () => {
+        isMouseDown = true;
         fullscreenImg.src = `merged/${i}.jpg`;
         fullscreen.style.display = 'flex';
       });
 
       window.addEventListener('mouseup', () => {
+        isMouseDown = false;
         fullscreen.style.display = 'none';
+        audio.pause();
+        audio.currentTime = 0;
       });
 
       grid.appendChild(img);
