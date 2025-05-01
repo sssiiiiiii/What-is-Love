@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is Love?</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      font-family: Helvetica, sans-serif;
+      background-color: #fff;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      padding-top: 1rem;
+      font-weight: 300;
+      font-size: 1.2rem;
+    }
+
+    .title {
+      margin: 1rem auto 0.5rem;
+      font-size: 1.4rem;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(19, 1fr);
+      gap: 4px;
+      width: calc(100vw - 2vw);
+      max-width: 100%;
+      margin: 1rem auto;
+      padding: 0 1vw;
+      box-sizing: border-box;
+    }
+
+    .grid img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.2s;
+      cursor: pointer;
+      aspect-ratio: 1 / 1;
+    }
+
+    .grid img:hover {
+      transform: scale(1.04);
+    }
+
+    .fullscreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .fullscreen img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+
+    .footer {
+      padding: 0.5rem 1rem 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .footer small {
+      display: block;
+      margin-top: 0.4rem;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div>01</div>
+    <div>02</div>
+    <div>03</div>
+  </div>
+  <div class="title">What is Love?</div>
+  <div class="grid" id="grid"></div>
+  <div class="fullscreen" id="fullscreen">
+    <img id="fullscreenImg" src="" alt="Full View">
+  </div>
+  <div class="footer">
+    Hover for sound, linger for read, click for image and subtitles.
+    <small>With obsession, by Nicole Si Yao Huang</small>
+  </div>
+
+  <script>
+    const grid = document.getElementById("grid");
+    const fullscreen = document.getElementById("fullscreen");
+    const fullscreenImg = document.getElementById("fullscreenImg");
+    const total = 228;
+
+    for (let i = 1; i <= total; i++) {
+      const img = document.createElement('img');
+      img.src = `images/${i}.jpg`;
+      img.alt = `Lock ${i}`;
+
+      const audio = new Audio(`sounds/${i}.mp3`);
+      img.addEventListener('mouseenter', () => {
+        audio.currentTime = 0;
+        audio.play();
+      });
+
+      img.addEventListener('mousedown', () => {
+        fullscreenImg.src = `merged/${i}.jpg`;
+        fullscreen.style.display = 'flex';
+      });
+
+      window.addEventListener('mouseup', () => {
+        fullscreen.style.display = 'none';
+      });
+
+      grid.appendChild(img);
+    }
+  </script>
+</body>
+</html>
